@@ -174,13 +174,14 @@ const NuevoProducto = () => {
                                 onBlur={formik.handleBlur}
                             >
                                 <option value="">-- Selecciona Categoría --</option>
-                                <option value="1">Categoría 1</option>
-                                <option value="2">Categoría 2</option>
-                                <option value="3">Categoría 3</option>
-                                <option value="4">Categoría 4</option>
-                                <option value="5">Categoría 5</option>
-                                <option value="6">Categoría 6</option>
-                                <option value="7">Categoría 7</option>
+                                <option value="Entrantes">Entrantes</option>
+                                <option value="Primeros">Primeros</option>
+                                <option value="Segundos">Segundos</option>
+                                <option value="Postres">Postres</option>
+                                <option value="Bebidas">Bebidas</option>
+                                <option value="Snacks">Snacks</option>
+                                <option value="Ensaladas">Ensaladas</option>
+                                <option value="Especiales">Especiales</option>
                             </select>
                         </div>
 
@@ -191,7 +192,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Imagen */}
+                        {/* imagen */}
                         <div className="mb-4">
                             <label htmlFor="imagen" className="block text-gray-700 text-sm font-bold mb-2">Imagen</label>
                             <input
@@ -205,34 +206,34 @@ const NuevoProducto = () => {
                             />
                             {subiendo && (
                                 <div className="h-6 w-full bg-gray-200 rounded overflow-hidden mb-4 relative border">
-                                    {/* Fondo animado con el progreso */}
+                                   
                                     <div
                                         className="bg-green-500 absolute left-0 top-0 h-full text-white text-xs px-2 flex items-center transition-all duration-300 ease-in-out"
                                         style={{ width: `${progreso}%` }}
                                     >
-                                        {/* Solo muestra texto si el ancho es suficiente */}
+                                       
                                         {progreso > 10 && `Subiendo: ${progreso}%`}
                                     </div>
                                 </div>
                             )}
 
-                                            {/* Mensaje de subida */}
+                                            
                             {subidaExitosa === true && (
                                // <div className="my-2 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded">
                                 <div className="my-2 bg-green-100 text-green-700 p-4 rounded shadow-sm">
-                                    ✅ Imagen subida correctamente
+                                    Imagen subida correctamente
                                 </div>
                             )}
 
                             {subidaExitosa === false && (
                                 <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
-                                    ❌ Error al subir la imagen. Intentalo de nuevo.
+                                    Error al subir la imagen. Intentalo de nuevo.
                                 </div>
                             )}
 
                         </div>
 
-                        {/* Descripción */}
+                        {/* descripcion */}
                         <div className="mb-4">
                             <label htmlFor="descripcion" className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                             <textarea
@@ -253,7 +254,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Botón */}
+                        {/* botn */}
                         <input
                             type="submit"
                             className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"

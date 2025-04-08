@@ -1,4 +1,6 @@
 import React, { useContext, useState } from "react";
+import { toast } from "react-toastify";
+
 
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -44,29 +46,37 @@ const NuevoProducto = () => {
                 .required('La descripción es obligatoria')
         }),
         onSubmit: async datos => {
-            try {
-                let urlImagen = imagenURL;
-
-                //guardar en la base de datos
-                await addDoc(collection(firebase.db, 'productos'), {
-                    disponible: true,
-                    nombre: datos.nombre,
-                    precio: Number(datos.precio),
-                    categoria: datos.categoria,
-                    descripcion: datos.descripcion,
-                    imagen: urlImagen
-                });
-
-                console.log("Producto agregado con éxito");
-                navigate('/menu');
-            } catch (error) {
-                console.log("Error al guardar en Firebase:", error);
+            if (subiendo) {
+              toast.warning("Espera a que termine de subir la imagen");
+              return;
             }
-        }
+          
+            if (!imagenURL) {
+              toast.error("Debes subir una imagen antes de guardar");
+              return;
+            }
+          
+            try {
+              await addDoc(collection(firebase.db, 'productos'), {
+                disponible: true,
+                nombre: datos.nombre,
+                precio: Number(datos.precio),
+                categoria: datos.categoria,
+                descripcion: datos.descripcion,
+                imagen: imagenURL
+              });
+          
+              toast.success("Producto creado correctamente");
+              navigate('/menu');
+            } catch (error) {
+              console.error("Error al guardar en Firebase:", error);
+              toast.error("Error al crear el producto");
+            }
+          }          
     });
 
-    // función personalizada que maneja la subida de imagen a Firebase Storage
-    // función personalizada que maneja la subida de imagen a Firebase Storage
+    
+    // funcion que maneja la subida de imagen a Firebase Storage
     const handleUploadImage = (e) => {
         const archivo = e.target?.files?.[0];
         if (!archivo || typeof archivo.name !== 'string') {
@@ -92,14 +102,14 @@ const NuevoProducto = () => {
                 (error) => {
                     console.error("Error al subir imagen:", error);
                     setSubiendo(false);
-                    setSubidaExitosa(false); // ❌ error
+                    setSubidaExitosa(false);
                 },
                 async () => {
                     const url = await getDownloadURL(uploadTask.snapshot.ref);
                     setImagenURL(url);
                     formik.setFieldValue("imagen", archivo);
                     setSubiendo(false);
-                    setSubidaExitosa(true); // ✅ éxito
+                    setSubidaExitosa(true); 
                 }
             );
         } catch (error) {
@@ -117,7 +127,7 @@ const NuevoProducto = () => {
             <div className="flex justify-center mt-10">
                 <div className="w-full max-w-3xl">
                     <form onSubmit={formik.handleSubmit}>
-                        {/* Nombre */}
+                        {/* nombre */}
                         <div className="mb-4">
                             <label htmlFor="nombre" className="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
                             <input
@@ -139,7 +149,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Precio */}
+                        {/* precio */}
                         <div className="mb-4">
                             <label htmlFor="precio" className="block text-gray-700 text-sm font-bold mb-2">Precio</label>
                             <input
@@ -162,7 +172,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Categoría */}
+                        {/* categoria */}
                         <div className="mb-4">
                             <label htmlFor="categoria" className="block text-gray-700 text-sm font-bold mb-2">Categoría</label>
                             <select

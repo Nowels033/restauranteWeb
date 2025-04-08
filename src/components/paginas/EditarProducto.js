@@ -6,10 +6,9 @@ import { FirebaseContext } from "../../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { toast } from "react-toastify";
-import Producto from "../ui/Producto";
-import { data } from "autoprefixer";
 
-const EditarProducto = ({}) => {
+
+const EditarProducto = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const { firebase } = useContext(FirebaseContext);
@@ -17,7 +16,7 @@ const EditarProducto = ({}) => {
     const [imagenURL, setImagenURL] = useState('');
     const [subiendo, setSubiendo] = useState(false);
     const [progreso, setProgreso] = useState(0);
-    const [subidaExitosa, setSubidaExitosa] = useState(null);
+   // const [subidaExitosa, setSubidaExitosa] = useState(null);
    // const { nombre, precio, categoria, descripcion, imagen } =producto;
 
     const formik = useFormik({
@@ -70,7 +69,7 @@ const EditarProducto = ({}) => {
             try {
                 const ref = doc(firebase.db, "productos", id);
                 const producto = await getDoc(ref);
-
+    
                 if (producto.exists()) {
                     const data = producto.data();
                     formik.setValues({
@@ -87,9 +86,10 @@ const EditarProducto = ({}) => {
                 toast.error(" Error al cargar el producto");
             }
         };
-
+    
         cargarProducto();
-    }, [firebase.db, id]);
+    }, [firebase.db, id, formik]);
+    
 
     const handleUploadImage = (e) => {
         const archivo = e.target?.files?.[0];
@@ -100,7 +100,7 @@ const EditarProducto = ({}) => {
 
         setSubiendo(true);
         setProgreso(0);
-        setSubidaExitosa(null);
+      //  setSubidaExitosa(null);
 
         const uploadTask = uploadBytesResumable(storageRef, archivo);
 
@@ -112,7 +112,7 @@ const EditarProducto = ({}) => {
             (error) => {
                 console.error("Error al subir imagen:", error);
                 setSubiendo(false);
-                setSubidaExitosa(false);
+               // setSubidaExitosa(false);
                 toast.error(" Error al subir la imagen");
             },
             async () => {
@@ -120,7 +120,7 @@ const EditarProducto = ({}) => {
                 setImagenURL(url);
                 formik.setFieldValue("imagen", url);
                 setSubiendo(false);
-                setSubidaExitosa(true);
+               // setSubidaExitosa(true);
                 toast.success("Imagen subida correctamente");
             }
         );

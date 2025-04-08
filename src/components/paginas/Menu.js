@@ -123,7 +123,7 @@ const Menu = () => {
         </div>
       </div>
 
-      {/* Agrupación visual por categoría */}
+      {/* Agrupacion visual por categor */}
       {Object.entries(productosPorCategoria).length === 0 ? (
         <div className="text-center text-gray-600 mt-10">
           <p className="text-lg mb-4">🚫 No hay productos para mostrar con los filtros seleccionados.</p>

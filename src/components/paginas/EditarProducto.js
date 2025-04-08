@@ -20,6 +20,7 @@ const EditarProducto = () => {
    // const { nombre, precio, categoria, descripcion, imagen } =producto;
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             nombre: '',
             precio: '',
@@ -88,7 +89,7 @@ const EditarProducto = () => {
         };
     
         cargarProducto();
-    }, [firebase.db, id, formik]);
+    }, [firebase.db, id]);
     
 
     const handleUploadImage = (e) => {

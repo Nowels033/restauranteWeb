@@ -64,7 +64,7 @@ const EditarProducto = () => {
             }
         }
     });
-
+// eslint-disable-next-line
     useEffect(() => {
         const cargarProducto = async () => {
             try {

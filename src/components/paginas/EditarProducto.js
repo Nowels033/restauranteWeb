@@ -133,7 +133,8 @@ const EditarProducto = ({}) => {
             <div className="flex justify-center mt-10">
                 <div className="w-full max-w-3xl">
                     <form onSubmit={formik.handleSubmit}>
-                        {/* Nombre */}
+                        
+                        {/* nombre */}
                         <div className="mb-4">
                             <label htmlFor="nombre" className="block text-gray-700 font-bold mb-2">Nombre</label>
                             <input
@@ -147,7 +148,7 @@ const EditarProducto = ({}) => {
                             />
                         </div>
 
-                        {/* Precio */}
+                        {/* precio */}
                         <div className="mb-4">
                             <label htmlFor="precio" className="block text-gray-700 font-bold mb-2">Precio</label>
                             <input
@@ -161,7 +162,7 @@ const EditarProducto = ({}) => {
                             />
                         </div>
 
-                        {/* Categoría */}
+                        {/* categoria */}
                         <div className="mb-4">
                             <label htmlFor="categoria" className="block text-gray-700 font-bold mb-2">Categoría</label>
                             <select
@@ -183,7 +184,7 @@ const EditarProducto = ({}) => {
                             </select>
                         </div>
 
-                        {/* Imagen */}
+                        {/* imagen */}
                         <div className="mb-4">
                             <label htmlFor="imagen" className="block text-gray-700 font-bold mb-2">Imagen</label>
                             <input
@@ -208,7 +209,7 @@ const EditarProducto = ({}) => {
                             )}
                         </div>
 
-                        {/* Descripción */}
+                        {/* descripcion */}
                         <div className="mb-4">
                             <label htmlFor="descripcion" className="block text-gray-700 font-bold mb-2">Descripción</label>
                             <textarea
@@ -220,7 +221,7 @@ const EditarProducto = ({}) => {
                             />
                         </div>
 
-                        {/* Botones */}
+                        {/* botoes */}
                         <div className="flex gap-4 mt-6">
                             <button
                                 type="submit"

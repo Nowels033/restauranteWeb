@@ -4,7 +4,7 @@ import { FirebaseContext } from "../../firebase";
 import Producto from "../ui/Producto";
 import { collection, onSnapshot } from "firebase/firestore";
 
-// Estilos visuales por categoría
+// estilos visuales 
 const categoriasVisuales = {
   "Entrantes": { nombre: "Entrantes", color: "text-red-600", icono: "🍽️" },
   "Primeros": { nombre: "Primeros", color: "text-green-600", icono: "🍲" },

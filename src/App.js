@@ -2,6 +2,7 @@
 import React from "react";
 import { Routes, Route } from "react-router";
 
+//componentes
 import Ordenes from "./components/paginas/Ordenes";
 import Menu from "./components/paginas/Menu";
 import NuevoProducto from "./components/paginas/NuevoProducto";
@@ -28,9 +29,9 @@ function App() {
             <Route path="/editar-producto/:id" element={<EditarProducto />} />
           </Routes>
         </div>
-        {/* Contenedor de toasts global */}
+       
         <ToastContainer 
-          position="bottom-right" // Puedes poner top-right, top-center, etc.
+          position="bottom-right" 
           autoClose={3000}
           hideProgressBar={false}
           newestOnTop={false}

@@ -45,7 +45,7 @@ const Producto = ({ producto, onEliminar }) => {
         <div className="w-full px-3 mb-4">
             <div className="p-5 shadow-md bg-white">
                 <div className="lg:flex">
-                    {/* Columna Izquierda */}
+                    {/* columna izq */}
                     <div className="lg:w-5/12 xl:w-3/12">
                         <p className="font-bold text-2xl text-yellow-600 mb-4">{nombre.toUpperCase()}</p>
                         <img src={imagen} alt={`imagen de ${nombre}`} className="mb-4 rounded" />
@@ -78,7 +78,7 @@ const Producto = ({ producto, onEliminar }) => {
                         </div>
                     </div>
 
-                    {/* Columna Derecha */}
+                    {/* columna derech */}
                     <div className="lg:w-7/12 xl:w-9/12 pl-5 pt-5">
                         <p className="font-bold text-2xl text-yellow-600 mb-4">INFORMACIÓN</p>
 

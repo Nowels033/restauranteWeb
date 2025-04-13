@@ -15,6 +15,15 @@ const Orden = ({ orden }) => {
       console.error("Error al actualizar tiempo de entrega:", error);
     }
   };
+  const completarOrden = async (id) => {
+    const pedidoRef = doc(firebase.db, 'pedidos', id);
+    try {
+      await updateDoc(pedidoRef, { completado: true });
+      console.log("Tiempo de entrega actualizado");
+    } catch (error) {
+      console.error("Error al actualizar tiempo de entrega:", error);
+    }
+  }
 
   return (
     <div className="sm:w-1/2 lg:w-1/3 mb-4">
@@ -58,6 +67,17 @@ const Orden = ({ orden }) => {
            <span className="font-bold">Tiempo de entrega: </span> 
             {orden.tiempoEntrega} minutos
           </p>
+        )}
+        {!orden.completado && orden.tiempoEntrega > 0 && (
+          <button
+            onClick={() => {
+             completarOrden(orden.id);
+            }}
+            type="submit"
+            className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"
+          >
+            Marcar como completado
+          </button>
         )}
       </div>
     </div>

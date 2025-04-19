@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router";
 
 //componentes
 import Ordenes from "./components/paginas/Ordenes";
+import OrdenesCompletadas from "./components/paginas/OrdenesCompletadas";
 import Menu from "./components/paginas/Menu";
 import NuevoProducto from "./components/paginas/NuevoProducto";
 import Sidebar from "./components/ui/Sidebar";
@@ -24,6 +25,7 @@ function App() {
         <div className="md:w-3/5 xl:w-4/5 p-6">
           <Routes>
             <Route path="/" element={<Ordenes />} />
+            <Route path="/ordenes-completadas" element={<OrdenesCompletadas />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/nuevo-producto" element={<NuevoProducto />} />
             <Route path="/editar-producto/:id" element={<EditarProducto />} />

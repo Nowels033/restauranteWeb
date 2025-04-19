@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { FirebaseContext } from "../../firebase";
-import { doc, updateDoc } from "firebase/firestore"; // ✅ Import Firebase v9+
+import { doc, updateDoc } from "firebase/firestore"; // firebase v9
 
 const Orden = ({ orden }) => {
   const { firebase } = useContext(FirebaseContext);

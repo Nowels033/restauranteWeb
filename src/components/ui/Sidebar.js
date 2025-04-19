@@ -11,6 +11,7 @@ const Sidebar = () => {
 
                 <nav className="mt-5">
                     <NavLink className={({isActive}) => isActive ? "text-yellow-500  hover:text-gray-900 hover:bg-yellow-500 block" : "p1 text-gray-400 block hover:text-gray-900 hover:bg-yellow-500 "} to="/">- Ordenes</NavLink>
+                    <NavLink className={({isActive}) => isActive ? "text-yellow-500  hover:text-gray-900 hover:bg-yellow-500 block" : "p1 text-gray-400 block hover:text-gray-900 hover:bg-yellow-500 "} to="/ordenes-completadas">- Ordenes Completas</NavLink>
                     <NavLink className={({isActive}) => isActive ? "text-yellow-500  hover:text-gray-900 hover:bg-yellow-500 block" : "p1 text-gray-400 block hover:text-gray-900 hover:bg-yellow-500 "} to="/menu">- Menú</NavLink>
                 </nav>
 

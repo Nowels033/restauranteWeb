@@ -37,7 +37,7 @@ const Menu = () => {
     return () => unsubscribe();
   }, [firebase.db]);
 
-  // Filtro aplicado
+  // filtro
   const productosFiltrados = productos.filter((producto) => {
     const coincideCategoria = filtroCategoria ? producto.categoria === filtroCategoria : true;
     const coincideDisponibilidad =
@@ -49,14 +49,14 @@ const Menu = () => {
     return coincideCategoria && coincideDisponibilidad;
   });
 
-  // Orden aplicado
+  // orden 
   const productosOrdenados = [...productosFiltrados].sort((a, b) => {
     if (orden === "precio") return a.precio - b.precio;
     if (orden === "categoria") return a.categoria.localeCompare(b.categoria);
     return a.nombre.localeCompare(b.nombre);
   });
 
-  // Agrupar por categoría
+  // agrupar 
   const productosPorCategoria = productosOrdenados.reduce((grupo, producto) => {
     const categoria = producto.categoria || "Sin categoría";
     if (!grupo[categoria]) grupo[categoria] = [];
@@ -75,7 +75,7 @@ const Menu = () => {
         Nuevo Producto
       </Link>
 
-      {/* Filtros */}
+      {/* filtros */}
       <div className="flex flex-wrap gap-4 mb-6 items-center">
         <div>
           <label className="font-bold text-gray-700 mr-2">Ordenar por:</label>
@@ -123,7 +123,7 @@ const Menu = () => {
         </div>
       </div>
 
-      {/* Agrupacion visual por categor */}
+      {/* por categor */}
       {Object.entries(productosPorCategoria).length === 0 ? (
         <div className="text-center text-gray-600 mt-10">
           <p className="text-lg mb-4">🚫 No hay productos para mostrar con los filtros seleccionados.</p>

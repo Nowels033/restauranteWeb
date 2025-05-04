@@ -1,7 +1,5 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
-
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FirebaseContext } from "../../firebase";
@@ -10,21 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const NuevoProducto = () => {
-    //state para la imagen emulando onUPLOAD
     const [subiendo, setSubiendo] = useState(false);
     const [progreso, setProgreso] = useState(0);
     const [imagenURL, setImagenURL] = useState('');
-    const [subidaExitosa, setSubidaExitosa] = useState(null); // null | true | false
+    const [subidaExitosa, setSubidaExitosa] = useState(null);
 
-
-    //context con las operaciones de firebase
     const { firebase } = useContext(FirebaseContext);
-    console.log(firebase);
-
-    //hook para redireccionar
     const navigate = useNavigate();
 
-    //leer formulario y validar 
     const formik = useFormik({
         initialValues: {
             nombre: '',
@@ -38,7 +29,8 @@ const NuevoProducto = () => {
                 .min(3, 'El nombre es inferior a 3 caracteres')
                 .required('El nombre del producto es obligatorio'),
             precio: Yup.number()
-                .min(1, 'El precio es muy bajo')
+                .typeError('El precio debe ser un número')
+                .positive('El precio debe ser positivo')
                 .required('El precio es obligatorio'),
             categoria: Yup.string()
                 .required('La categoría es obligatoria'),
@@ -47,36 +39,34 @@ const NuevoProducto = () => {
         }),
         onSubmit: async datos => {
             if (subiendo) {
-              toast.warning("Espera a que termine de subir la imagen");
-              return;
+                toast.warning("Espera a que termine de subir la imagen");
+                return;
             }
-          
+
             if (!imagenURL) {
-              toast.error("Debes subir una imagen antes de guardar");
-              return;
+                toast.error("Debes subir una imagen antes de guardar");
+                return;
             }
-          
+
             try {
-              await addDoc(collection(firebase.db, 'productos'), {
-                disponible: true,
-                nombre: datos.nombre,
-                precio: Number(datos.precio),
-                categoria: datos.categoria,
-                descripcion: datos.descripcion,
-                imagen: imagenURL
-              });
-          
-              toast.success("Producto creado correctamente");
-              navigate('/menu');
+                await addDoc(collection(firebase.db, 'productos'), {
+                    disponible: true,
+                    nombre: datos.nombre,
+                    precio: parseFloat(datos.precio),  // ✅ guarda como decimal
+                    categoria: datos.categoria,
+                    descripcion: datos.descripcion,
+                    imagen: imagenURL
+                });
+
+                toast.success("Producto creado correctamente");
+                navigate('/menu');
             } catch (error) {
-              console.error("Error al guardar en Firebase:", error);
-              toast.error("Error al crear el producto");
+                console.error("Error al guardar en Firebase:", error);
+                toast.error("Error al crear el producto");
             }
-          }          
+        }
     });
 
-    
-    // funcion que maneja la subida de imagen a Firebase Storage
     const handleUploadImage = (e) => {
         const archivo = e.target?.files?.[0];
         if (!archivo || typeof archivo.name !== 'string') {
@@ -85,12 +75,12 @@ const NuevoProducto = () => {
         }
 
         try {
-            const storage = getStorage(); // usamos instancia por defecto sin depender de firebase.app
+            const storage = getStorage();
             const storageRef = ref(storage, `productos/${Date.now()}_${archivo.name}`);
 
             setSubiendo(true);
             setProgreso(0);
-            setSubidaExitosa(null); // reiniciar estado
+            setSubidaExitosa(null);
 
             const uploadTask = uploadBytesResumable(storageRef, archivo);
 
@@ -109,7 +99,7 @@ const NuevoProducto = () => {
                     setImagenURL(url);
                     formik.setFieldValue("imagen", archivo);
                     setSubiendo(false);
-                    setSubidaExitosa(true); 
+                    setSubidaExitosa(true);
                 }
             );
         } catch (error) {
@@ -118,8 +108,6 @@ const NuevoProducto = () => {
         }
     };
 
-    
-
     return (
         <>
             <h1 className="text-3xl font-light mb-4">Nuevo Producto</h1>
@@ -127,7 +115,7 @@ const NuevoProducto = () => {
             <div className="flex justify-center mt-10">
                 <div className="w-full max-w-3xl">
                     <form onSubmit={formik.handleSubmit}>
-                        {/* nombre */}
+                        {/* Nombre */}
                         <div className="mb-4">
                             <label htmlFor="nombre" className="block text-gray-700 text-sm font-bold mb-2">Nombre</label>
                             <input
@@ -141,7 +129,6 @@ const NuevoProducto = () => {
                                 onBlur={formik.handleBlur}
                             />
                         </div>
-
                         {formik.touched.nombre && formik.errors.nombre && (
                             <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
                                 <p className="font-bold">Error</p>
@@ -149,7 +136,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* precio */}
+                        {/* Precio (decimal) */}
                         <div className="mb-4">
                             <label htmlFor="precio" className="block text-gray-700 text-sm font-bold mb-2">Precio</label>
                             <input
@@ -157,6 +144,7 @@ const NuevoProducto = () => {
                                 name="precio"
                                 type="number"
                                 min="0"
+                                step="0.01"  // ✅ permite decimales
                                 placeholder="Precio Producto"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formik.values.precio}
@@ -164,7 +152,6 @@ const NuevoProducto = () => {
                                 onBlur={formik.handleBlur}
                             />
                         </div>
-
                         {formik.touched.precio && formik.errors.precio && (
                             <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
                                 <p className="font-bold">Error</p>
@@ -172,7 +159,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* categoria */}
+                        {/* Categoría */}
                         <div className="mb-4">
                             <label htmlFor="categoria" className="block text-gray-700 text-sm font-bold mb-2">Categoría</label>
                             <select
@@ -194,7 +181,6 @@ const NuevoProducto = () => {
                                 <option value="Especiales">Especiales</option>
                             </select>
                         </div>
-
                         {formik.touched.categoria && formik.errors.categoria && (
                             <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
                                 <p className="font-bold">Error</p>
@@ -202,7 +188,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* imagen */}
+                        {/* Imagen */}
                         <div className="mb-4">
                             <label htmlFor="imagen" className="block text-gray-700 text-sm font-bold mb-2">Imagen</label>
                             <input
@@ -216,34 +202,27 @@ const NuevoProducto = () => {
                             />
                             {subiendo && (
                                 <div className="h-6 w-full bg-gray-200 rounded overflow-hidden mb-4 relative border">
-                                   
                                     <div
                                         className="bg-green-500 absolute left-0 top-0 h-full text-white text-xs px-2 flex items-center transition-all duration-300 ease-in-out"
                                         style={{ width: `${progreso}%` }}
                                     >
-                                       
                                         {progreso > 10 && `Subiendo: ${progreso}%`}
                                     </div>
                                 </div>
                             )}
-
-                                            
                             {subidaExitosa === true && (
-                               // <div className="my-2 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded">
                                 <div className="my-2 bg-green-100 text-green-700 p-4 rounded shadow-sm">
                                     Imagen subida correctamente
                                 </div>
                             )}
-
                             {subidaExitosa === false && (
                                 <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded">
                                     Error al subir la imagen. Intentalo de nuevo.
                                 </div>
                             )}
-
                         </div>
 
-                        {/* descripcion */}
+                        {/* Descripción */}
                         <div className="mb-4">
                             <label htmlFor="descripcion" className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                             <textarea
@@ -256,7 +235,6 @@ const NuevoProducto = () => {
                                 onBlur={formik.handleBlur}
                             />
                         </div>
-
                         {formik.touched.descripcion && formik.errors.descripcion && (
                             <div className="my-2 bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
                                 <p className="font-bold">Error</p>
@@ -264,7 +242,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* botn */}
+                        {/* Botón */}
                         <input
                             type="submit"
                             className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"

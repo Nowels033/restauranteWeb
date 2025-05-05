@@ -86,7 +86,8 @@ const EditarProducto = () => {
     };
 
     cargarProducto();
-  }, [firebase.db, id, formik]); // ✅ añadimos formik aquí
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firebase.db, id]); 
 
   const handleUploadImage = (e) => {
     const archivo = e.target?.files?.[0];

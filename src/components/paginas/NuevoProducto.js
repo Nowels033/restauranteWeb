@@ -52,7 +52,7 @@ const NuevoProducto = () => {
                 await addDoc(collection(firebase.db, 'productos'), {
                     disponible: true,
                     nombre: datos.nombre,
-                    precio: parseFloat(datos.precio),  // ✅ guarda como decimal
+                    precio: parseFloat(datos.precio),
                     categoria: datos.categoria,
                     descripcion: datos.descripcion,
                     imagen: imagenURL
@@ -136,7 +136,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Precio (decimal) */}
+                        {/* Precio  */}
                         <div className="mb-4">
                             <label htmlFor="precio" className="block text-gray-700 text-sm font-bold mb-2">Precio</label>
                             <input
@@ -144,7 +144,7 @@ const NuevoProducto = () => {
                                 name="precio"
                                 type="number"
                                 min="0"
-                                step="0.01"  // ✅ permite decimales
+                                step="0.01"  
                                 placeholder="Precio Producto"
                                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 value={formik.values.precio}

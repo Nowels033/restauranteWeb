@@ -159,7 +159,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Categoría */}
+                        {/* Categoria */}
                         <div className="mb-4">
                             <label htmlFor="categoria" className="block text-gray-700 text-sm font-bold mb-2">Categoría</label>
                             <select
@@ -222,7 +222,7 @@ const NuevoProducto = () => {
                             )}
                         </div>
 
-                        {/* Descripción */}
+                        {/* Descripcion */}
                         <div className="mb-4">
                             <label htmlFor="descripcion" className="block text-gray-700 text-sm font-bold mb-2">Descripción</label>
                             <textarea
@@ -242,7 +242,7 @@ const NuevoProducto = () => {
                             </div>
                         )}
 
-                        {/* Botón */}
+                        {/* Boton */}
                         <input
                             type="submit"
                             className="bg-gray-800 hover:bg-gray-900 w-full mt-5 p-2 text-white uppercase font-bold"

@@ -8,10 +8,10 @@ class Firebase {
         if (!getApps().length) {
             this.app = initializeApp(firebaseConfig);
         } else {
-            this.app = getApp(); // usa el primero si ya está iniciado
+            this.app = getApp(); 
         }
 
-        this.db = getFirestore(this.app); // aquí obtienes Firestore
+        this.db = getFirestore(this.app); 
     }
 }
 
